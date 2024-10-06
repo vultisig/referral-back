@@ -33,8 +33,8 @@ export class ExternalApiService {
             },
             offset: skip,
             limit: take,
-            order: [['created_at', 'DESC']],
-
+            order: [['createdAt', 'DESC']],
+            attributes: Object.keys(new UserDetailDto())
         });
 
         return {
