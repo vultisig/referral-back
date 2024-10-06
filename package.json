@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/sequelize": "^10.0.1",
     "@nestjs/swagger": "^7.4.2",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "node-telegram-bot-api": "^0.66.0",
     "pg": "^8.13.0",

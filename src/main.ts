@@ -5,7 +5,7 @@ import {User} from "./user/user.model";
 import * as process from "process";
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, {cors: true});
     User.sync({alter: true});
 
     const swaggerConfig = new DocumentBuilder().setTitle('Vultisig api').setVersion('1.0').build()
