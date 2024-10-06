@@ -25,9 +25,9 @@ export class UserController {
         return await this.userService.getMe(req.user)
     }
 
-    @Get('/referrals')
+    @Post('/referrals')
     @HttpCode(200)
-    async getReferrals(@Req() req, skip: number = 0, take: number = 10) {
+    async getReferrals(@Req() req, @Body('skip') skip: number = 0, @Body('take') take: number = 10) {
         return await this.userService.getUsersReferrals(req.user, skip, take)
     }
 
