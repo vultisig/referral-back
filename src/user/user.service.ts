@@ -41,14 +41,13 @@ export class UserService {
     }
 
 
-
     async getUsersReferrals(user: User, skip: number = 0, take: number = 10): Promise<{
         total: number,
         items: User[]
     }> {
 
         const result: { count: number; rows: User[] } = await this.userModel.findAndCountAll({
-            where: {parent_id: user.id},
+            where: {parent_id: user.uuid},
             offset: skip,
             limit: take,
         });
