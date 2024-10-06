@@ -24,7 +24,7 @@ export class User extends Model<User, any> {
     referrals_count: number
 
     @Column({type: DataType.STRING, allowNull: false, defaultValue: ''})
-    wallet_id: string
+    wallet_uid: string
 
     @Column({type: DataType.STRING, allowNull: true, defaultValue: null})
     wallet_public_key_eddsa: string
