@@ -34,8 +34,10 @@ export class ExternalApiService {
             offset: skip,
             limit: take,
             order: [['createdAt', 'DESC']],
+            attributes: Object.keys(new UserDetailDto())
 
         });
+
 
         return {
             count,

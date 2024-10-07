@@ -21,10 +21,11 @@ export class TelegramBotService implements OnModuleInit {
             const text = msg.text;
             switch (text) {
                 case '/start':
-                    this.startMessageHandler(chatId)
-                    break
+                    this.startMessageHandler(chatId);
+                    break;
                 default:
                     this.sendMessage(chatId, 'Invalid command');
+                    break
 
             }
 
