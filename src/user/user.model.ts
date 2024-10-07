@@ -3,7 +3,7 @@ import {DataTypes} from "sequelize";
 
 @Table({tableName: 'users'})
 export class User extends Model<User, any> {
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     id: string
 
     @Column({
