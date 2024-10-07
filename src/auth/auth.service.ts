@@ -4,10 +4,15 @@ import {JwtService} from "@nestjs/jwt";
 import {UserService} from "../user/user.service";
 import {AuthUserDto} from "./dto/auth-user.dto";
 import * as process from "process";
+import {TelegramBotService} from "../telegram-bot/telegram-bot.service";
 
 @Injectable()
 export class AuthService {
-    constructor(private jwtService: JwtService, private userService: UserService) {
+    constructor(
+        private jwtService: JwtService,
+        private userService: UserService,
+        private telegramBotService: TelegramBotService
+    ) {
     }
 
     async login(dto: AuthUserDto) {
@@ -57,6 +62,8 @@ export class AuthService {
             throw new HttpException('User not Found', 422);
         }
 
+        await this.sendMessageToParent(parent, data.userData.username);
+
         const userData = {
             ...data.userData,
             id: data.userData.id,
@@ -69,6 +76,13 @@ export class AuthService {
             token,
             user,
         };
+    }
+
+    private async sendMessageToParent(parent, username) {
+        const {id} = parent;
+        const message = `Finally! ${username} has joined your team on VultiRef!`
+        await this.telegramBotService.sendMessage(id, message);
+
     }
 
 
