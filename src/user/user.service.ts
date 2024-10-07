@@ -58,7 +58,7 @@ export class UserService {
         }
     }
 
-    //TODO Проверить
+
     async changeUserWallet(user: User, data: ChangeWalletDto): Promise<User> {
         const transaction = await this.userModel.sequelize.transaction();
         try {
