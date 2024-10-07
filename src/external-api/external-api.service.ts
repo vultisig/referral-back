@@ -2,7 +2,8 @@ import {Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {User} from "../user/user.model";
 import {Op} from "sequelize";
-import {UserDetailDto} from "../user/dto/user-detail";
+
+
 
 @Injectable()
 export class ExternalApiService {
@@ -34,7 +35,7 @@ export class ExternalApiService {
             offset: skip,
             limit: take,
             order: [['createdAt', 'DESC']],
-            attributes: Object.keys(new UserDetailDto())
+            attributes: ['uuid', 'referrals_count', 'wallet_uid', 'wallet_public_key_eddsa', 'wallet_public_key_ecdsa', 'wallet_hex_chain_code', 'parent_id', 'createdAt']
 
         });
 
