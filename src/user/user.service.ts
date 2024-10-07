@@ -27,7 +27,7 @@ export class UserService {
             throw new Error('Telegram ID must be provided');
         }
 
-        return await this.userModel.findOne({where: {id: telegramId}})
+        return await this.userModel.findOne({where: {id: telegramId.toString()}})
     }
 
     async getMe(user: User): Promise<User> {
