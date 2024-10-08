@@ -50,7 +50,7 @@ export class TelegramBotService implements OnModuleInit {
                 inline_keyboard: [
                     [
                         {
-                            text: 'Launch Vultiref',
+                            text: 'Launch VultisigBot',
                             url: 'https://t.me/vultirefbot/app',
                         },
                     ],
