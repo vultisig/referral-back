@@ -46,7 +46,7 @@ export class ExternalApiController {
         }
     })
     @HttpCode(200)
-    async checkUserAirdropStatus(@Body('uuid') uuid: string): Promise<{ status: boolean } | HttpException> {
+    async checkUserAirdropStatus(@Body('uuid') uuid: string): Promise<{ status: boolean }> {
         return await this.externalApiService.checkUserAirdropStatus(uuid)
     }
 
@@ -65,7 +65,7 @@ export class ExternalApiController {
         }
     })
     @HttpCode(200)
-    async joinToAirdrop(@Body('uuid') uuid: string): Promise<{ join_airdrop: boolean } | HttpException> {
+    async joinToAirdrop(@Body('uuid') uuid: string): Promise<{ join_airdrop: boolean }> {
         return await this.externalApiService.joinToAirdrop(uuid)
     }
 }

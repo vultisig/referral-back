@@ -77,10 +77,10 @@ export class ExternalApiService {
 
     }
 
-    async getUSerFromVAS(user: User): Promise<VASUser | any> {
+    async getUSerFromVAS(user: User): Promise<VASUser> {
         const currentUser = await this.userModel.findOne({where: {uuid: user.uuid}})
         if (!currentUser.wallet_public_key_eddsa || !currentUser.wallet_public_key_ecdsa) {
-            return new HttpException('User has no wallet', 500)
+            throw new HttpException('User has no wallet', 500)
         }
         try {
             const res: AxiosResponse<VASUser> = await lastValueFrom(this.httpService.get(`${process.env.VAS_URL}${currentUser.wallet_public_key_ecdsa}/${currentUser.wallet_public_key_eddsa}`))
@@ -92,10 +92,10 @@ export class ExternalApiService {
 
     }
 
-    async checkUserAirdropStatus(uuid: string): Promise<{ status: boolean } | HttpException> {
+    async checkUserAirdropStatus(uuid: string): Promise<{ status: boolean }> {
         const user = await this.userModel.findOne({where: {uuid: uuid}})
         if (!user.wallet_public_key_eddsa || !user.wallet_public_key_ecdsa) {
-            return new HttpException('User has no wallet', 500)
+            throw new HttpException('User has no wallet', 500)
 
         }
         try {
@@ -110,10 +110,10 @@ export class ExternalApiService {
 
     }
 
-    async joinToAirdrop(uuid: string): Promise<{ join_airdrop: boolean } | HttpException> {
+    async joinToAirdrop(uuid: string): Promise<{ join_airdrop: boolean }> {
         const user = await this.userModel.findOne({where: {uuid: uuid}})
         if (!user.wallet_public_key_eddsa || !user.wallet_public_key_ecdsa) {
-            return new HttpException('User has no wallet', 500)
+            throw new HttpException('User has no wallet', 500)
         }
         try {
             const vasUser = await this.getUSerFromVAS(user)
@@ -130,6 +130,7 @@ export class ExternalApiService {
             return {
                 join_airdrop: true
             }
+
         } catch (e) {
             throw new HttpException('', e.status)
         }
