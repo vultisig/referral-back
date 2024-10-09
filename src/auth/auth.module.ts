@@ -4,10 +4,8 @@ import {AuthService} from "./auth.service";
 import {UserModule} from "../user/user.module";
 import {TelegramBotModule} from "../telegram-bot/telegram-bot.module";
 import {JwtModule} from "@nestjs/jwt";
-import * as process from "process";
-import {ConfigModule, ConfigService} from "@nestjs/config";
 
-console.log('ssss',process.env.JWT_SECRET)
+import {ConfigModule, ConfigService} from "@nestjs/config";
 
 @Module({
     controllers: [AuthController],
