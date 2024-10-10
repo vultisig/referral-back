@@ -13,7 +13,9 @@ import {UserMiddleware} from "../user/user.middleware";
     providers: [ExternalApiService, JwtService],
     imports: [
         SequelizeModule.forFeature([User]),
-        HttpModule
+        HttpModule.register({
+            timeout: 5000
+        })
     ]
 })
 export class ExternalApiModule {
