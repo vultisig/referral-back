@@ -126,7 +126,7 @@ export class ExternalApiService {
             }
 
 
-            const res = await lastValueFrom(this.httpService.post(`https://airdrop.vultisig.com/api/vault/join-airdrop`, sendData))
+            const res = await lastValueFrom(this.httpService.post(`${process.env.VAS_URL}join-airdrop`, sendData))
             return {
                 join_airdrop: true
             }
