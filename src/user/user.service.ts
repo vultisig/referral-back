@@ -1,7 +1,7 @@
-import {Injectable} from '@nestjs/common';
+import {HttpException, Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {User} from "./user.model";
-import {Attributes, NonNullFindOptions} from "sequelize";
+import {Op} from "sequelize";
 import {ChangeWalletDto} from "./dto/change-wallet.dto";
 
 @Injectable()
@@ -58,8 +58,31 @@ export class UserService {
         }
     }
 
+    private async checkUserWallet(id: string, data: ChangeWalletDto): Promise<boolean> {
+        const user = await this.userModel.findOne({
+            where: {
+                [Op.and]: [
+                    {
+                        wallet_public_key_ecdsa: data.wallet_public_key_ecdsa
+                    },
+                    {
+                        wallet_public_key_eddsa: data.wallet_public_key_eddsa
+                    }
+
+                ]
+            }
+        })
+
+        return !user || user.id === id;
+
+    }
+
 
     async changeUserWallet(user: User, data: ChangeWalletDto): Promise<User> {
+        if (!await this.checkUserWallet(user.id, data)) {
+            throw new HttpException('is not your wallet', 423)
+        }
+
         const transaction = await this.userModel.sequelize.transaction();
         try {
             const currentUser = await this.userModel.findOne({where: {id: user.id}, transaction});
@@ -71,6 +94,7 @@ export class UserService {
             await transaction.rollback();
             throw e;
         }
+
 
     }
 }
