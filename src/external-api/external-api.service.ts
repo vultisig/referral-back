@@ -104,7 +104,7 @@ export class ExternalApiService {
                 status: res.data.join_airdrop
             }
         } catch (e) {
-            throw new HttpException('', 500)
+            throw new HttpException(e.response.data, 500)
         }
 
 
