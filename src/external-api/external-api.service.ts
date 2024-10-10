@@ -86,7 +86,7 @@ export class ExternalApiService {
             const res: AxiosResponse<VASUser> = await lastValueFrom(this.httpService.get(`${process.env.VAS_URL}${currentUser.wallet_public_key_ecdsa}/${currentUser.wallet_public_key_eddsa}`))
             return res.data
         } catch (e) {
-            throw new HttpException(e.response.data, 500)
+            throw new HttpException(e.message, 500)
         }
 
 
@@ -104,7 +104,7 @@ export class ExternalApiService {
                 status: res.data.join_airdrop
             }
         } catch (e) {
-            throw new HttpException(e.response.data, 500)
+            throw new HttpException(e.message, 500)
         }
 
 
