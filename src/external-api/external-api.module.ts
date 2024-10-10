@@ -23,6 +23,9 @@ export class ExternalApiModule {
             .forRoutes({
                 path: '/external-api/getVASUser',
                 method: RequestMethod.GET
-            }, {path: '/external-api/putUserToVAS', method: RequestMethod.POST})
+            }, {path: '/external-api/putUserToVAS', method: RequestMethod.POST}, {
+                path: '/external-api/join',
+                method: RequestMethod.POST
+            })
     }
 }

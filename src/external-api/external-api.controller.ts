@@ -51,7 +51,6 @@ export class ExternalApiController {
     }
 
     @Post('/join')
-    @ApiBody({type: CheckUserStatusDto})
     @ApiOperation({summary: 'Join to airdrop'})
     @ApiResponse({
         status: 200,
@@ -65,7 +64,7 @@ export class ExternalApiController {
         }
     })
     @HttpCode(200)
-    async joinToAirdrop(@Body('uuid') uuid: string): Promise<{ join_airdrop: boolean }> {
-        return await this.externalApiService.joinToAirdrop(uuid)
+    async joinToAirdrop(@Req() req): Promise<{ join_airdrop: boolean }> {
+        return await this.externalApiService.joinToAirdrop(req.user)
     }
 }

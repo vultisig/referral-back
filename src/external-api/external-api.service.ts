@@ -110,15 +110,15 @@ export class ExternalApiService {
 
     }
 
-    async joinToAirdrop(uuid: string): Promise<{ join_airdrop: boolean }> {
-        const user = await this.userModel.findOne({where: {uuid: uuid}})
-        if (!user.wallet_public_key_eddsa || !user.wallet_public_key_ecdsa) {
+    async joinToAirdrop(user: User): Promise<{ join_airdrop: boolean }> {
+        const currentUser = await this.userModel.findOne({where: {uuid: user.uuid}})
+        if (!currentUser.wallet_public_key_eddsa || !currentUser.wallet_public_key_ecdsa) {
             throw new HttpException('User has no wallet', 500)
         }
         try {
             const vasUser = await this.getUSerFromVAS(user)
             const sendData = {
-                hex_chain_code: user.wallet_hex_chain_code,
+                hex_chain_code: currentUser.wallet_hex_chain_code,
                 name: vasUser.name,
                 public_key_ecdsa: vasUser?.public_key_ecdsa,
                 public_key_eddsa: vasUser?.public_key_eddsa,
