@@ -58,8 +58,13 @@ export class AuthService {
 
 
     private async createUserViaRefOnly(data) {
+        if (!data.ref) {
+            throw new HttpException('User not Found', 422);
+        }
+
         const parent = await this.userService.getUserByUuid(data.ref);
-        if (!parent || !data.ref) {
+
+        if (!parent) {
             throw new HttpException('User not Found', 422);
         }
 

@@ -15,10 +15,6 @@ export class UserService {
 
 
     async getUserByUuid(userId: string) {
-        if (!userId) {
-            throw new Error('User ID must be provided');
-        }
-
         return await this.userModel.findOne({where: {uuid: userId}})
     }
 
