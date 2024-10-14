@@ -56,6 +56,7 @@ export class AuthService {
 
     }
 
+
     private async createUserViaRefOnly(data) {
         const parent = await this.userService.getUserByUuid(data.ref);
         if (!parent || !data.ref) {
@@ -63,6 +64,8 @@ export class AuthService {
         }
 
         await this.sendMessageToParent(parent, data.userData.username);
+        await this.userService.updateUser(parent, {ref_count: parent.referrals_count + 1});
+
 
         const userData = {
             ...data.userData,

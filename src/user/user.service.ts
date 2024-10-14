@@ -40,6 +40,20 @@ export class UserService {
         return await this.userModel.create(data)
     }
 
+    async updateUser(user: User, data: any): Promise<User> {
+        const transaction = await this.userModel.sequelize.transaction();
+        try {
+            await user.update(data, {transaction});
+            await transaction.commit();
+        } catch (e) {
+            await transaction.rollback();
+            throw e;
+        }
+
+        return user
+
+    }
+
 
     async getUsersReferrals(user: User, skip: number = 0, take: number = 10): Promise<{
         total: number,
