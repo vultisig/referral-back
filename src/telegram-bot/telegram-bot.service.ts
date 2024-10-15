@@ -24,7 +24,7 @@ export class TelegramBotService implements OnModuleInit {
                     this.startMessageHandler(chatId);
                     break;
                 default:
-                    this.sendMessage(chatId, 'Invalid command');
+                    this.startMessageHandler(chatId);
                     break
 
             }
