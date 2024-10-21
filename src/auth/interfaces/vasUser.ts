@@ -10,5 +10,6 @@ export interface VASUser {
     join_airdrop: boolean,
     rank: boolean
     chains: Chain[],
+    balance: number
 
 }
