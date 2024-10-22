@@ -88,7 +88,7 @@ export class AuthService {
 
     private async sendMessageToParent(parent, username) {
         const {id} = parent;
-        const message = `Finally! ${username}  has joined your squad on VultisigBot!`
+        const message = `Finally! ${username ? username : 'Your friend' }  has joined your squad on VultisigBot!`
         await this.telegramBotService.sendMessage(id, message);
 
     }
