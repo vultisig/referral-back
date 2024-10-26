@@ -15,6 +15,9 @@ export class AchievementsModel extends Model<AchievementsModel> {
     @Column({type: DataType.STRING, allowNull: false,})
     code: string
 
+    @Column({type: DataType.STRING, allowNull: false,})
+    name:string
+
     @Column({type: DataType.STRING, allowNull: true,})
     icon: string
 
