@@ -30,7 +30,7 @@ export class UserService {
 
     async getMe(user: User): Promise<any> {
 
-        const userWithAchievements = await this.userModel.findOne({
+       const  userWithAchievements  = await this.userModel.findOne({
             where: {uuid: user.uuid}, include: [
                 {
                     model: UserAchievementModel,
@@ -39,37 +39,29 @@ export class UserService {
             ], rejectOnEmpty: false
         })
 
-        const {
-            id,
-            uuid,
-            first_name,
-            username,
-            referrals_count,
-            wallet_uid,
-            wallet_public_key_eddsa,
-            wallet_public_key_ecdsa,
-            wallet_hex_chain_code,
-            parent_id,
-            createdAt,
-            updatedAt,
-            UserAchievements = [] // Дефолтное значение
-        } = userWithAchievements;
 
-        return {
-            id,
-            uuid,
-            first_name,
-            username,
-            referrals_count,
-            wallet_uid,
-            wallet_public_key_eddsa,
-            wallet_public_key_ecdsa,
-            wallet_hex_chain_code,
-            parent_id,
-            createdAt,
-            updatedAt,
-            achievements: UserAchievements.map(({code}) => code)
+
+        const userResponse = {
+            id: userWithAchievements.id,
+            uuid: userWithAchievements.uuid,
+            first_name: userWithAchievements.first_name,
+            username: userWithAchievements.username,
+            referrals_count: userWithAchievements.referrals_count,
+            wallet_uid: userWithAchievements.wallet_uid,
+            wallet_public_key_eddsa: userWithAchievements.wallet_public_key_eddsa,
+            wallet_public_key_ecdsa: userWithAchievements.wallet_public_key_ecdsa,
+            wallet_hex_chain_code: userWithAchievements.wallet_hex_chain_code,
+            parent_id: userWithAchievements.parent_id,
+            createdAt: userWithAchievements.createdAt,
+            updatedAt: userWithAchievements.updatedAt,
+            achievements: userWithAchievements.achievements ?
+                userWithAchievements.achievements.map(userAchievement =>
+                    userAchievement.code
+                ) : []
         };
+
+       return  userResponse
+
 
     }
 
