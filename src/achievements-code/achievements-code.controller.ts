@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseGuards} from '@nestjs/common';
 import {AchievementsCodeService} from "./achievements-code.service";
 import {CreateAchievementsCodeDto} from "./dto/create-achievements-code.dto";
-import {ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiTags} from "@nestjs/swagger";
 import {ApiGuard} from "../global-guard/api/api.guard";
 
 @Controller('achievements-code')
@@ -14,6 +14,18 @@ export class AchievementsCodeController {
     @Get('/list')
     @UseGuards(ApiGuard)
     @HttpCode(200)
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                apiKey: {
+                    type: 'string',
+                    example: 'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
+                },
+            },
+            required: ['apiKey'],
+        },
+    })
     async getList() {
         return await this.service.getList()
     }
@@ -28,6 +40,7 @@ export class AchievementsCodeController {
     @Post('/createMany')
     @UseGuards(ApiGuard)
     @HttpCode(200)
+    @ApiBody({type: CreateAchievementsCodeDto ,isArray:true})
     async createAchievementsBatch(@Body() body: CreateAchievementsCodeDto[]) {
         return await this.service.createAchievementsBatch(body)
     }
@@ -35,6 +48,18 @@ export class AchievementsCodeController {
     @Delete('/delete/:id')
     @UseGuards(ApiGuard)
     @HttpCode(200)
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                apiKey: {
+                    type: 'string',
+                    example: 'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
+                },
+            },
+            required: ['apiKey'],
+        },
+    })
     async deleteAchievementsCode(@Param('id') id: string) {
         return await this.service.deleteAchievementsCode(id)
     }

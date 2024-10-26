@@ -34,7 +34,7 @@ export class AchievementsController {
     @Post('/createMany')
     @UseGuards(ApiGuard)
     @HttpCode(200)
-    @ApiBody({type: [CreateAchievementDto]})
+    @ApiBody({type: CreateAchievementDto ,isArray:true})
 
     async createAchievementsBatch(@Body() body: CreateAchievementDto[]): Promise<any> {
         return await this.achievementsService.createAchievementsBatch(body)
@@ -50,6 +50,18 @@ export class AchievementsController {
     @Delete('/delete/:id')
     @UseGuards(ApiGuard)
     @HttpCode(200)
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                apiKey: {
+                    type: 'string',
+                    example: 'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
+                },
+            },
+            required: ['apiKey'],
+        },
+    })
     async deleteAchievement(@Param('id') id: string) {
         return await this.achievementsService.deleteAchievement(id)
     }
