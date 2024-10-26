@@ -1,5 +1,6 @@
-import {Column, DataType, Model, Table} from "sequelize-typescript";
+import {Column, DataType, HasMany, Model, Table} from "sequelize-typescript";
 import {DataTypes} from "sequelize";
+import {UserAchievementModel} from "../user-achievement/user-achievement.model";
 
 @Table({tableName: 'achievements'})
 export class AchievementsModel extends Model<AchievementsModel> {
@@ -22,4 +23,7 @@ export class AchievementsModel extends Model<AchievementsModel> {
 
     @Column({type: DataType.DATE, allowNull: true,})
     end_date: Date
+
+    @HasMany(() => UserAchievementModel)
+    userAchievements: UserAchievementModel[];
 }

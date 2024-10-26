@@ -3,6 +3,8 @@ import {InjectModel} from "@nestjs/sequelize";
 import {User} from "./user.model";
 import {Op} from "sequelize";
 import {ChangeWalletDto} from "./dto/change-wallet.dto";
+import {UserAchievementModel} from "../user-achievement/user-achievement.model";
+import {AchievementsModel} from "../achievements/achievements.model";
 
 @Injectable()
 export class UserService {
@@ -26,9 +28,49 @@ export class UserService {
         return await this.userModel.findOne({where: {id: telegramId.toString()}})
     }
 
-    async getMe(user: User): Promise<User> {
+    async getMe(user: User): Promise<any> {
 
-        return await this.userModel.findOne({where: {uuid: user.uuid}})
+        const userWithAchievements = await this.userModel.findOne({
+            where: {uuid: user.uuid}, include: [
+                {
+                    model: UserAchievementModel,
+                    attributes: ['code'],
+                }
+            ], rejectOnEmpty: false
+        })
+
+        const {
+            id,
+            uuid,
+            first_name,
+            username,
+            referrals_count,
+            wallet_uid,
+            wallet_public_key_eddsa,
+            wallet_public_key_ecdsa,
+            wallet_hex_chain_code,
+            parent_id,
+            createdAt,
+            updatedAt,
+            UserAchievements = [] // Дефолтное значение
+        } = userWithAchievements;
+
+        return {
+            id,
+            uuid,
+            first_name,
+            username,
+            referrals_count,
+            wallet_uid,
+            wallet_public_key_eddsa,
+            wallet_public_key_ecdsa,
+            wallet_hex_chain_code,
+            parent_id,
+            createdAt,
+            updatedAt,
+            achievements: UserAchievements.map(({code}) => code)
+        };
+
     }
 
 

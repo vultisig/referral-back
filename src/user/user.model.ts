@@ -1,5 +1,6 @@
-import {Column, DataType, Model, BelongsTo, Table, ForeignKey} from "sequelize-typescript";
+import {Column, DataType, Model, BelongsTo, Table, ForeignKey, HasMany} from "sequelize-typescript";
 import {DataTypes} from "sequelize";
+import {UserAchievementModel} from "../user-achievement/user-achievement.model";
 
 @Table({tableName: 'users'})
 export class User extends Model<User, any> {
@@ -41,5 +42,8 @@ export class User extends Model<User, any> {
 
     @BelongsTo(() => User, {foreignKey: 'parent_id'})
     parent: User;
+
+    @HasMany(() => UserAchievementModel)
+    achievements: UserAchievementModel[]
 
 }

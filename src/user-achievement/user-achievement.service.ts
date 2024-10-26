@@ -14,11 +14,12 @@ export class UserAchievementService {
     ) {
     }
 
-    async getUserAchievements(user_id: string,skip: number = 0, take: number = 10) {
+    async getUserAchievements(user_id: string, skip: number = 0, take: number = 10) {
         return await this.model.findAll({
             where: {
                 user_id: user_id,
             },
+            attributes: ['code'],
             offset: skip,
             limit: take
         })
@@ -61,19 +62,20 @@ export class UserAchievementService {
 
         if (!userAchievement) {
             await this.codeModel.update(
-                { user_id: user_id },
-                { where: { id: achievementCode.id } },
+                {user_id: user_id},
+                {where: {id: achievementCode.id}},
             );
 
             await this.model.create({
                 user_id: user_id,
-                achievement_id: achievement.id
+                achievement_id: achievement.id,
+                code: achievementCode.code,
             })
 
-            return { status: 200, message: 'Achievement applied successfully' };
+            return {status: 200, message: 'Achievement applied successfully'};
         } else {
             // Если достижение уже есть
-            return { status: 420, message: 'Achievement already applied' };
+            return {status: 420, message: 'Achievement already applied'};
         }
 
 

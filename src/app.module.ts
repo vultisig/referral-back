@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { AchievementsModule } from './achievements/achievements.module';
 import { AchievementsCodeModule } from './achievements-code/achievements-code.module';
 import { UserAchievementModule } from './user-achievement/user-achievement.module';
+import {UserAchievementModel} from "./user-achievement/user-achievement.model";
 
 
 @Module({
@@ -27,7 +28,7 @@ import { UserAchievementModule } from './user-achievement/user-achievement.modul
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User],
+            models: [User,UserAchievementModel,AchievementsModel],
             autoLoadModels: true,
             synchronize: true,
         }),
