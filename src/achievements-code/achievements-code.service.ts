@@ -19,7 +19,7 @@ export class AchievementsCodeService {
             where: {
                 code: data.code,
             },
-            rejectOnEmpty: true
+            rejectOnEmpty: false
         })
 
         if (existingCode) {

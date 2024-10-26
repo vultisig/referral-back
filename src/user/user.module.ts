@@ -21,7 +21,7 @@ import {AchievementsCodeModel} from "../achievements-code/achievements-code.mode
 export class UserModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(UserMiddleware) // Применяем middleware
+            .apply(UserMiddleware)
             .forRoutes(UserController)
     }
 }

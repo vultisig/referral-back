@@ -34,7 +34,7 @@ export class UserAchievementService {
                 code: trimCode,
                 user_id: null,
             },
-            rejectOnEmpty: true
+            rejectOnEmpty: false
         });
         if (!achievementCode) {
             throw new HttpException('No achievement code found', 424);
@@ -44,7 +44,7 @@ export class UserAchievementService {
             where: {
                 id: achievementCode.achievement_id,
             },
-            rejectOnEmpty: true
+            rejectOnEmpty: false
         });
 
         if (!achievement || (achievement.end_date && new Date(achievement.end_date) > new Date())) {
@@ -56,7 +56,7 @@ export class UserAchievementService {
                 user_id: user_id,
                 achievement_id: achievement.id,
             },
-            rejectOnEmpty: true
+            rejectOnEmpty: false
         });
 
         if (!userAchievement) {
