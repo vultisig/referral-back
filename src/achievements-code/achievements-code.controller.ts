@@ -1,8 +1,9 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseGuards} from '@nestjs/common';
 import {AchievementsCodeService} from "./achievements-code.service";
-import {CreateAchievementsCodeDto} from "./dto/create-achievements-code.dto";
-import {ApiBody, ApiParam, ApiQuery, ApiTags} from "@nestjs/swagger";
+import {CreateAchievementsCodeDto, CreateAchievementsCodeDtoSwagger} from "./dto/create-achievements-code.dto";
+import {ApiBody, ApiParam, ApiProperty, ApiQuery, ApiTags} from "@nestjs/swagger";
 import {ApiGuard} from "../global-guard/api/api.guard";
+import {CreateAchievementsCodeManyDto} from "./dto/create-achievements-code-many.dto";
 
 @Controller('achievements-code')
 @ApiTags('achievements-code')
@@ -27,6 +28,7 @@ export class AchievementsCodeController {
     @Post('/create')
     @UseGuards(ApiGuard)
     @HttpCode(200)
+    @ApiBody({type:CreateAchievementsCodeDtoSwagger})
     async createAchievementsCode(@Body() body: CreateAchievementsCodeDto) {
         return await this.service.createAchievementsCode(body)
     }
@@ -34,9 +36,8 @@ export class AchievementsCodeController {
     @Post('/createMany')
     @UseGuards(ApiGuard)
     @HttpCode(200)
-    @ApiBody({type: CreateAchievementsCodeDto ,isArray:true})
-    async createAchievementsBatch(@Body() body: CreateAchievementsCodeDto[]) {
-        return await this.service.createAchievementsBatch(body)
+    async createAchievementsBatch(@Body() body: CreateAchievementsCodeManyDto) {
+        return await this.service.createAchievementsBatch(body.items)
     }
 
     @Delete('/delete/:id')
