@@ -5,8 +5,12 @@ import {SettingsModule} from './settings/settings.module';
 import {UserModule} from './user/user.module';
 import * as process from 'process';
 import {User} from "./user/user.model";
+import {AchievementsModel}  from "./achievements/achievements.model";
 import { ExternalApiModule } from './external-api/external-api.module';
 import { AuthModule } from './auth/auth.module';
+import { AchievementsModule } from './achievements/achievements.module';
+import { AchievementsCodeModule } from './achievements-code/achievements-code.module';
+import { UserAchievementModule } from './user-achievement/user-achievement.module';
 
 
 @Module({
@@ -30,7 +34,10 @@ import { AuthModule } from './auth/auth.module';
         SettingsModule,
         UserModule,
         ExternalApiModule,
-        AuthModule
+        AuthModule,
+        AchievementsModule,
+        AchievementsCodeModule,
+        UserAchievementModule
 
     ],
     exports: [],
