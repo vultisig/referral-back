@@ -12,6 +12,7 @@ export class AchievementsCodeController {
     }
 
     @Get('/list')
+    @UseGuards(ApiGuard)
     @HttpCode(200)
     async getList() {
         return await this.service.getList()

@@ -15,7 +15,6 @@ export class AchievementsController {
     }
 
     @Post('/list')
-    @UseGuards(ApiGuard)
     @HttpCode(200)
 
     async getList(@Body() body: GetAchievementDto): Promise<any> {
