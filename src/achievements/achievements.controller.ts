@@ -1,9 +1,10 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpException, Param, Post, Put, Req} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpException, Param, Post, Put, Req, UseGuards} from '@nestjs/common';
 import {ApiBody, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {AchievementsService} from "./achievements.service";
 import {CreateAchievementDto} from "./dto/create-achievement.dto";
 import {GetAchievementDto} from "./dto/get-achievement.dto";
 import {UserAchievementService} from "../user-achievement/user-achievement.service";
+import {ApiGuard} from "../global-guard/api/api.guard";
 
 @Controller('achievements')
 @ApiTags('achievements')
@@ -14,7 +15,9 @@ export class AchievementsController {
     }
 
     @Post('/list')
+    @UseGuards(ApiGuard)
     @HttpCode(200)
+
     async getList(@Body() body: GetAchievementDto): Promise<any> {
         return await this.achievementsService.getList({
             start: body.start_date__gte,
@@ -23,12 +26,14 @@ export class AchievementsController {
     }
 
     @Post('/create')
+    @UseGuards(ApiGuard)
     @HttpCode(200)
     async createAchievement(@Body() body: CreateAchievementDto) {
         return await this.achievementsService.createAchievement(body)
     }
 
     @Post('/createMany')
+    @UseGuards(ApiGuard)
     @HttpCode(200)
     @ApiBody({type: [CreateAchievementDto]})
 
@@ -37,12 +42,14 @@ export class AchievementsController {
     }
 
     @Put('/edit/:id')
+    @UseGuards(ApiGuard)
     @HttpCode(200)
     async editAchievement(@Body() body: CreateAchievementDto, @Param('id') id: string) {
         return await this.achievementsService.editAchievement(id, body)
     }
 
     @Delete('/delete/:id')
+    @UseGuards(ApiGuard)
     @HttpCode(200)
     async deleteAchievement(@Param('id') id: string) {
         return await this.achievementsService.deleteAchievement(id)
