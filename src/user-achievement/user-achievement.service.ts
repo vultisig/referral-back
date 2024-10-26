@@ -29,7 +29,12 @@ export class UserAchievementService {
             ]
         })
 
-        return userAchievements.map(userAchievement => userAchievement.achievement)
+        return {
+            total: userAchievements.length,
+            data: userAchievements.map(userAchievement => userAchievement.achievement)
+        }
+
+
     }
 
     async applyAchievement(user_id: string, code: string) {
