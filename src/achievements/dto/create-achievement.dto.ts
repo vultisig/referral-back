@@ -38,4 +38,12 @@ export class CreateAchievementDto {
         format: 'date-time',
     })
     end_date: Date
+
+    @ApiProperty({
+        example: 'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
+        description: 'vultisig api key',
+        type: 'string',
+    })
+
+    apiKey: string
 }
