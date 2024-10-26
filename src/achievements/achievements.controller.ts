@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpException, Param, Post, Req} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpException, Param, Post, Put, Req} from '@nestjs/common';
 import {ApiBody, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {AchievementsService} from "./achievements.service";
 import {CreateAchievementDto} from "./dto/create-achievement.dto";
@@ -36,13 +36,13 @@ export class AchievementsController {
         return await this.achievementsService.createAchievementsBatch(body)
     }
 
-    @Post('/edit/:id')
+    @Put('/edit/:id')
     @HttpCode(200)
     async editAchievement(@Body() body: CreateAchievementDto, @Param('id') id: string) {
         return await this.achievementsService.editAchievement(id, body)
     }
 
-    @Post('/delete/:id')
+    @Delete('/delete/:id')
     @HttpCode(200)
     async deleteAchievement(@Param('id') id: string) {
         return await this.achievementsService.deleteAchievement(id)
