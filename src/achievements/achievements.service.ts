@@ -46,7 +46,7 @@ export class AchievementsService {
         return this.achievementsModel.create(data)
     }
 
-    createAchievementsBatch(data: CreateAchievementDto[]) {
+    createAchievementsBatch(data:CreateAchievementDto[]) {
         return this.achievementsModel.bulkCreate(data)
     }
 
