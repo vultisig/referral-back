@@ -41,6 +41,7 @@ export class ExternalApiService {
             order: [['createdAt', 'DESC']],
             attributes: ['uuid', 'referrals_count', 'wallet_uid', 'wallet_public_key_eddsa', 'wallet_public_key_ecdsa', 'wallet_hex_chain_code', 'parent_id', 'createdAt']
 
+
         });
 
 
