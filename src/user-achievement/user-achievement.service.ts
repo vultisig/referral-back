@@ -15,13 +15,21 @@ export class UserAchievementService {
     }
 
     async getUserAchievements(user_id: string, skip: number = 0, take: number = 10) {
-        return await this.model.findAll({
+        const userAchievements = await this.model.findAll({
             where: {
                 user_id: user_id,
             },
             offset: skip,
-            limit: take
+            limit: take,
+            include: [
+                {
+                    model: AchievementsModel,
+
+                }
+            ]
         })
+
+        return userAchievements.map(userAchievement => userAchievement.achievement)
     }
 
     async applyAchievement(user_id: string, code: string) {
@@ -62,7 +70,7 @@ export class UserAchievementService {
 
         if (!userAchievement) {
             const code = await this.codeModel.update(
-                {user_id: user_id , used_date: new Date().toISOString()},
+                {user_id: user_id, used_date: new Date().toISOString()},
                 {where: {id: achievementCode.id}},
             );
 
@@ -80,8 +88,8 @@ export class UserAchievementService {
             )
 
         } else {
-            // Если достижение уже есть
-            return {status: 420, message: 'Achievement already applied'};
+            throw new HttpException('Achievement already applied', 420);
+
         }
 
 

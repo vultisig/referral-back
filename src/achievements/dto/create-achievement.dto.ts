@@ -8,7 +8,6 @@ export class CreateAchievementDto {
         type: 'string',
     })
     name: string
-
     @ApiProperty({
         example: 'gd-2024',
         description: 'icon of achievement',
