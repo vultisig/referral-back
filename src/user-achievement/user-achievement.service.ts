@@ -48,6 +48,11 @@ export class UserAchievementService {
             rejectOnEmpty: false
         });
 
+        console.log('achievement', achievement)
+        console.log('achievementCode.achievement_id',achievementCode.achievement_id,)
+        console.log('data',new Date(achievement.end_date) > new Date())
+
+
         if (!achievement || (achievement.end_date && new Date(achievement.end_date) > new Date())) {
             throw new HttpException('No achievement found or achievement is inactive', 423);
         }
