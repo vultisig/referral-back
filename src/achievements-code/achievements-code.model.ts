@@ -1,4 +1,4 @@
-import {Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
 import {DataTypes} from "sequelize";
 import {User} from "../user/user.model";
 import {AchievementsModel} from "../achievements/achievements.model";
@@ -20,8 +20,15 @@ export class AchievementsCodeModel extends Model<AchievementsCodeModel> {
     @Column({type: DataType.STRING, allowNull: true,})
     user_id: string
 
+    @BelongsTo(() => User, {foreignKey: 'uuid'})
+    user: User
+
+
     @ForeignKey(() => AchievementsModel)
     achievement_id: string
+
+    @BelongsTo(() => AchievementsModel, {foreignKey: 'id'})
+    achievement: AchievementsModel
 
 
     @Column({type: DataType.STRING, allowNull: true,})

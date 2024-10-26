@@ -10,6 +10,7 @@ export class AchievementsModel extends Model<AchievementsModel> {
         defaultValue: DataTypes.UUIDV4,
     })
     id: string
+
     @Column({type: DataType.STRING, allowNull: false,})
     code: string
 

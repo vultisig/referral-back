@@ -20,14 +20,14 @@ export class AchievementsService {
                 where: {
                     [Op.or]: [
                         {
-                            // Условия для событий, где start_date и end_date не заданы
+
                             [Op.and]: [
                                 {start_date: null},
                                 {end_date: null}
                             ]
                         },
                         {
-                            // Условия для событий, где start_date >= start_date__gte и end_date <= end_date__lte
+
                             [Op.and]: [
                                 {start_date: {[Op.gte]: start}},
                                 {end_date: {[Op.lte]: end}}
