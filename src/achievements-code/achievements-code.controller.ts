@@ -1,30 +1,24 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseGuards} from '@nestjs/common';
 import {AchievementsCodeService} from "./achievements-code.service";
 import {CreateAchievementsCodeDto} from "./dto/create-achievements-code.dto";
-import {ApiBody, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiParam, ApiQuery, ApiTags} from "@nestjs/swagger";
 import {ApiGuard} from "../global-guard/api/api.guard";
 
 @Controller('achievements-code')
 @ApiTags('achievements-code')
 export class AchievementsCodeController {
 
-    constructor(private service:AchievementsCodeService) {
+    constructor(private service: AchievementsCodeService) {
     }
 
     @Get('/list')
     @UseGuards(ApiGuard)
     @HttpCode(200)
-    @ApiBody({
-        schema: {
-            type: 'object',
-            properties: {
-                apiKey: {
-                    type: 'string',
-                    example: 'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
-                },
-            },
-            required: ['apiKey'],
-        },
+    @ApiQuery({
+        name: 'apiKey',
+        type: 'string',
+        description: 'vultisig api key',
+        example: 'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
     })
     async getList() {
         return await this.service.getList()
@@ -70,8 +64,6 @@ export class AchievementsCodeController {
     async editAchievementsCode(@Param('id') id: string, @Body() body: CreateAchievementsCodeDto) {
         return await this.service.editAchievementsCode(id, body)
     }
-
-
 
 
 }
