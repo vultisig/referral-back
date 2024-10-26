@@ -62,7 +62,7 @@ export class UserAchievementService {
 
         if (!userAchievement) {
             const code = await this.codeModel.update(
-                {user_id: user_id},
+                {user_id: user_id , used_date: new Date().toISOString()},
                 {where: {id: achievementCode.id}},
             );
 
@@ -70,8 +70,15 @@ export class UserAchievementService {
                 user_id: user_id,
                 achievement_id: achievement.id,
                 code: achievementCode.code,
+
             })
-            return code
+            return await this.achievementModel.findOne(
+                {
+                    where: {id: achievement.id},
+                    rejectOnEmpty: false
+                }
+            )
+
         } else {
             // Если достижение уже есть
             return {status: 420, message: 'Achievement already applied'};
