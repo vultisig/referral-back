@@ -3,6 +3,7 @@ import {UserService} from "./user.service";
 import {ChangeWalletDto} from "./dto/change-wallet.dto";
 import {ApiBody, ApiTags} from "@nestjs/swagger";
 import {UserAchievementService} from "../user-achievement/user-achievement.service";
+import {GetUserAchievementDto} from "../user-achievement/dto/get-user-achievement.dto";
 
 
 @Controller('user')
@@ -10,7 +11,7 @@ import {UserAchievementService} from "../user-achievement/user-achievement.servi
 export class UserController {
     constructor(private userService: UserService,
                 private achievementService: UserAchievementService
-             ) {
+    ) {
     }
 
     @Post('/changeWallet')
@@ -35,10 +36,10 @@ export class UserController {
         return await this.userService.getUsersReferrals(req.user, skip, take)
     }
 
-    @Get('/achievements')
+    @Post('/achievements')
     @HttpCode(200)
-    async getUserAchievements(@Req() req) {
-        return await this.achievementService.getUserAchievements(req.user.uuid)
+    async getUserAchievements(@Req() req, @Body() {skip, take}: GetUserAchievementDto) {
+        return await this.achievementService.getUserAchievements(req.user.uuid, skip, take)
     }
 
 

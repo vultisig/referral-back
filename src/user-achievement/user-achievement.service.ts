@@ -14,11 +14,13 @@ export class UserAchievementService {
     ) {
     }
 
-    async getUserAchievements(user_id: string) {
+    async getUserAchievements(user_id: string,skip: number = 0, take: number = 10) {
         return await this.model.findAll({
             where: {
-                user_id
-            }
+                user_id: user_id,
+            },
+            offset: skip,
+            limit: take
         })
     }
 
