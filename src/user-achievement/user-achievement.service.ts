@@ -64,6 +64,12 @@ export class UserAchievementService {
                 { user_id: user_id },
                 { where: { id: achievementCode.id } },
             );
+
+            await this.model.create({
+                user_id: user_id,
+                achievement_id: achievement.id
+            })
+
             return { status: 200, message: 'Achievement applied successfully' };
         } else {
             // Если достижение уже есть
