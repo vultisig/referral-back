@@ -3,6 +3,8 @@ import {InjectModel} from "@nestjs/sequelize";
 import {User} from "./user.model";
 import {Op} from "sequelize";
 import {ChangeWalletDto} from "./dto/change-wallet.dto";
+import {UserAchievementModel} from "../user-achievement/user-achievement.model";
+import {AchievementsModel} from "../achievements/achievements.model";
 
 @Injectable()
 export class UserService {
@@ -26,9 +28,41 @@ export class UserService {
         return await this.userModel.findOne({where: {id: telegramId.toString()}})
     }
 
-    async getMe(user: User): Promise<User> {
+    async getMe(user: User): Promise<any> {
 
-        return await this.userModel.findOne({where: {uuid: user.uuid}})
+       const  userWithAchievements  = await this.userModel.findOne({
+            where: {uuid: user.uuid}, include: [
+                {
+                    model: UserAchievementModel,
+                    attributes: ['code'],
+                }
+            ], rejectOnEmpty: false
+        })
+
+
+
+        const userResponse = {
+            id: userWithAchievements.id,
+            uuid: userWithAchievements.uuid,
+            first_name: userWithAchievements.first_name,
+            username: userWithAchievements.username,
+            referrals_count: userWithAchievements.referrals_count,
+            wallet_uid: userWithAchievements.wallet_uid,
+            wallet_public_key_eddsa: userWithAchievements.wallet_public_key_eddsa,
+            wallet_public_key_ecdsa: userWithAchievements.wallet_public_key_ecdsa,
+            wallet_hex_chain_code: userWithAchievements.wallet_hex_chain_code,
+            parent_id: userWithAchievements.parent_id,
+            createdAt: userWithAchievements.createdAt,
+            updatedAt: userWithAchievements.updatedAt,
+            achievements: userWithAchievements.achievements ?
+                userWithAchievements.achievements.map(userAchievement =>
+                    userAchievement.code
+                ) : []
+        };
+
+       return  userResponse
+
+
     }
 
 

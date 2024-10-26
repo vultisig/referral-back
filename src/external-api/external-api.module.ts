@@ -21,7 +21,7 @@ import {UserMiddleware} from "../user/user.middleware";
 export class ExternalApiModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(UserMiddleware) // Применяем middleware
+            .apply(UserMiddleware)
             .forRoutes({
                 path: '/external-api/getVASUser',
                 method: RequestMethod.GET

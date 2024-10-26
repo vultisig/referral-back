@@ -7,6 +7,7 @@ import * as process from "process";
 import {lastValueFrom} from "rxjs";
 import {AxiosResponse} from "axios/index";
 import {VASUser} from "../auth/interfaces/vasUser";
+import {UserAchievementModel} from "../user-achievement/user-achievement.model";
 
 
 @Injectable()
@@ -14,7 +15,7 @@ export class ExternalApiService {
     constructor(@InjectModel(User) private userModel: typeof User, private readonly httpService: HttpService) {
     }
 
-    async getUsers(skip: number = 0, take: number = 10): Promise<{ count: number; rows: User[] }> {
+    async getUsers(skip: number = 0, take: number = 10): Promise<{ count: number; rows: any[] }> {
         const {count, rows: users} = await this.userModel.findAndCountAll({
             where: {
                 [Op.and]: [
@@ -39,14 +40,22 @@ export class ExternalApiService {
             offset: skip,
             limit: take,
             order: [['createdAt', 'DESC']],
-            attributes: ['uuid', 'referrals_count', 'wallet_uid', 'wallet_public_key_eddsa', 'wallet_public_key_ecdsa', 'wallet_hex_chain_code', 'parent_id', 'createdAt']
-
+            attributes: ['uuid', 'referrals_count', 'wallet_uid', 'wallet_public_key_eddsa', 'wallet_public_key_ecdsa', 'wallet_hex_chain_code', 'parent_id', 'createdAt'],
+            include: [
+                {
+                    model: UserAchievementModel,
+                    attributes: ['code'],
+                }
+            ]
         });
 
-
+        const formattedUsers = users.map(user => ({
+            ...user.get(),
+            achievements: user.achievements.map(achievement => achievement.code)
+        }));
         return {
             count,
-            rows: users
+            rows: formattedUsers
         }
 
     }
