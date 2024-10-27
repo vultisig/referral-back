@@ -16,7 +16,7 @@ export class AchievementsModel extends Model<AchievementsModel> {
     code: string
 
     @Column({type: DataType.STRING, allowNull: false,})
-    name:string
+    name: string
 
     @Column({type: DataType.STRING, allowNull: true,})
     icon: string
@@ -26,6 +26,12 @@ export class AchievementsModel extends Model<AchievementsModel> {
 
     @Column({type: DataType.DATE, allowNull: true,})
     end_date: Date
+
+    @Column({type: DataType.STRING, allowNull: true,})
+    description: string
+
+    @Column({type: DataType.STRING, allowNull: true,})
+    color: string
 
     @HasMany(() => UserAchievementModel)
     userAchievements: UserAchievementModel[];

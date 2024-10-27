@@ -23,6 +23,20 @@ export class CreateAchievementDto {
     code: string
 
     @ApiProperty({
+        example: '#32a852',
+        description: 'color of achievement',
+        type: 'string',
+    })
+    color: string
+
+    @ApiProperty({
+        example: 'Sed ut perspiciatis unde omnis iste natus error sit',
+        description: 'description of achievement',
+        type: 'string',
+    })
+    description: string
+
+    @ApiProperty({
         example: '2020-07-10 15:00:00.000',
         description: 'start date',
         type: 'string',
@@ -42,7 +56,7 @@ export class CreateAchievementDto {
 
 }
 
-export  class CreateAchievementDtoSwagger extends CreateAchievementDto {
+export class CreateAchievementDtoSwagger extends CreateAchievementDto {
 
     @ApiProperty({
         example: 'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
