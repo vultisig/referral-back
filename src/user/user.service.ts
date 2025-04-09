@@ -102,6 +102,25 @@ export class UserService {
         }
     }
 
+    async getAllUsersReferrals(user: string ,skip: number = 0, take: number = 10): Promise<{
+        total: number,
+        items: User[]
+    }> {
+
+        const whereClause = user ? { parent_id: user } : {};
+
+        const result: { count: number; rows: User[] } = await this.userModel.findAndCountAll({
+          where: whereClause,
+          offset: skip,
+          limit: take,
+        });
+      
+        return {
+          total: result.count,
+          items: result.rows,
+        };
+    }
+
     private async checkUserWallet(id: string, data: ChangeWalletDto): Promise<boolean> {
         const user = await this.userModel.findOne({
             where: {
