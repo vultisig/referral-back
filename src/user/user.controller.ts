@@ -1,7 +1,8 @@
-import {Body, Controller, Get, HttpCode, Post, Req} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, Post, Req, UseGuards, Query} from '@nestjs/common';
 import {UserService} from "./user.service";
 import {ChangeWalletDto} from "./dto/change-wallet.dto";
-import {ApiBody, ApiTags} from "@nestjs/swagger";
+import {ApiBody,ApiQuery, ApiTags} from "@nestjs/swagger";
+import {ApiGuard} from "../global-guard/api/api.guard";
 import {UserAchievementService} from "../user-achievement/user-achievement.service";
 import {GetUserAchievementDto} from "../user-achievement/dto/get-user-achievement.dto";
 
@@ -42,5 +43,19 @@ export class UserController {
         return await this.achievementService.getUserAchievements(req.user.uuid, skip, take)
     }
 
+  @Get('/referrals')
+  @UseGuards(ApiGuard)
+  @HttpCode(200)
+  @ApiQuery({ name: 'apiKey', type: 'string', required: true })
+  @ApiQuery({ name: 'userId', type: 'number', required: false })
+  @ApiQuery({ name: 'skip', type: 'number', required: false })
+  @ApiQuery({ name: 'take', type: 'number', required: false })
+  async SelectAllUsers(
+    @Query('user') userId: string = "",
+    @Query('skip') skip: number = 0,
+    @Query('take') take: number = 10,
+  ) {
+    return await this.userService.getAllUsersReferrals(userId ,skip, take);
+  }
 
 }
