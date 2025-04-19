@@ -102,24 +102,44 @@ export class UserService {
         }
     }
 
-    async getAllUsersReferrals(user: string ,skip: number = 0, take: number = 10): Promise<{
-        total: number,
-        items: User[]
-    }> {
-
-        const whereClause = user ? { parent_id: user } : {};
-
-        const result: { count: number; rows: User[] } = await this.userModel.findAndCountAll({
-          where: whereClause,
-          offset: skip,
-          limit: take,
-        });
-      
-        return {
-          total: result.count,
-          items: result.rows,
+    async getAllUsersReferrals(
+        eddsa_key: string,
+        ecdsa_key: string,
+        skip: number = 0,
+        take: number = 10,
+      ): Promise<{
+        total: number;
+        items: User[];
+      }> {
+        const whereClause = {
+          wallet_public_key_eddsa: eddsa_key,
+          wallet_public_key_ecdsa: ecdsa_key,
         };
-    }
+    
+        const User: { count: number; rows: User[] } =
+          await this.userModel.findAndCountAll({
+            where: whereClause,
+            offset: skip,
+            limit: take,
+          });
+    
+        if (User.count == 0) {
+          throw new HttpException('User not found', 404);
+        }
+    
+        const referralUser: { count: number; rows: User[] } =
+          await this.userModel.findAndCountAll({
+            where: {parent_id: User.rows[0].uuid},
+            offset: skip,
+            limit: take,
+          });
+    
+        return {
+          total: referralUser.count,
+          items: referralUser.rows,
+        };
+      }
+    
 
     private async checkUserWallet(id: string, data: ChangeWalletDto): Promise<boolean> {
         const user = await this.userModel.findOne({
