@@ -46,16 +46,26 @@ export class UserController {
   @Get('/referrals')
   @UseGuards(ApiGuard)
   @HttpCode(200)
-  @ApiQuery({ name: 'apiKey', type: 'string', required: true })
-  @ApiQuery({ name: 'userId', type: 'number', required: false })
+  @ApiQuery({
+    name: 'apiKey',
+    type: 'string',
+    description: 'vultisig api key',
+    example:
+      'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
+  })
   @ApiQuery({ name: 'skip', type: 'number', required: false })
   @ApiQuery({ name: 'take', type: 'number', required: false })
   async SelectAllUsers(
-    @Query('user') userId: string = "",
+    @Query('eddsaKey') eddsa: string = '',
+    @Query('ecdsaKey') ecdsa: string = '',
     @Query('skip') skip: number = 0,
     @Query('take') take: number = 10,
   ) {
-    return await this.userService.getAllUsersReferrals(userId ,skip, take);
+    return await this.userService.getAllUsersReferrals(
+      eddsa,
+      ecdsa,
+      skip,
+      take,
+    );
   }
-
 }
