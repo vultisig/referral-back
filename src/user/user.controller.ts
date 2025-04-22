@@ -68,4 +68,24 @@ export class UserController {
       take,
     );
   }
+
+  @Get('/list')
+  @UseGuards(ApiGuard)
+  @HttpCode(200)
+  @ApiQuery({
+    name: 'apiKey',
+    type: 'string',
+    description: 'vultisig api key',
+    example:
+      'uweZLdPEiPc9YNRQJfs2LEH8KonEOk9hWDc8SxNKEBIM3dY2Nn3YE1PTPRC1owdf6TZMd2O37H3NrTocnVZJxMrLdJMWXmwEYadZY8thuwLfxYxd5pWxIrIWrSCrP1tc',
+  })
+  @ApiQuery({ name: 'skip', type: 'number', required: false })
+  @ApiQuery({ name: 'take', type: 'number', required: false })
+  async userList(
+    @Query('skip') skip: number = 0,
+    @Query('take') take: number = 10,
+  ) {
+    return await this.userService.userList(skip, take);
+  }
 }
+

@@ -116,20 +116,17 @@ export class UserService {
           wallet_public_key_ecdsa: ecdsa_key,
         };
     
-        const User: { count: number; rows: User[] } =
-          await this.userModel.findAndCountAll({
-            where: whereClause,
-            offset: skip,
-            limit: take,
-          });
+        const User = await this.userModel.findOne({
+          where: whereClause,
+        });
     
-        if (User.count == 0) {
+        if (!User) {
           throw new HttpException('User not found', 404);
         }
     
         const referralUser: { count: number; rows: User[] } =
           await this.userModel.findAndCountAll({
-            where: {parent_id: User.rows[0].uuid},
+            where: { parent_id: User.uuid },
             offset: skip,
             limit: take,
           });
@@ -179,6 +176,21 @@ export class UserService {
         }
 
 
+    }
+
+    async userList(skip: number = 0, take: number = 10): Promise<{
+        total: number,
+        items: User[]
+    }> {
+        const result: { count: number; rows: User[] } = await this.userModel.findAndCountAll({
+          offset: skip,
+          limit: take,
+        });
+      
+        return {
+          total: result.count,
+          items: result.rows,
+        };
     }
 }
 
